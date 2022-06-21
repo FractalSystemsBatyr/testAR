@@ -1,20 +1,53 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-  <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
-  <!-- we import arjs version without NFT but with marker + location based support -->
-  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
-  <body style="margin : 0px; overflow: hidden;">
-    <a-scene embedded arjs>
-      <a-marker preset="hiro">
-        <a-image
-          src="assets/asset.jpg"
-          scale="1 1 1"
-          class="clickable"
-          rotation="-90 0 0"
-          gesture-handler
-        ></a-image>
-      </a-marker>
-      <a-entity camera></a-entity>
-    </a-scene>
-  </body>
+    <head>
+        <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+        <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+        <script src="https://raw.githack.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+        <script src="https://raw.githack.com/AR-js-org/studio-backend/master/src/modules/marker/tools/gesture-detector.js"></script>
+        <script src="https://raw.githack.com/AR-js-org/studio-backend/master/src/modules/marker/tools/gesture-handler.js"></script>
+    </head>
+
+    <body style="margin: 0; overflow: hidden;">
+        <a-scene
+            vr-mode-ui="enabled: false;"
+            loading-screen="enabled: false;"
+            renderer="logarithmicDepthBuffer: true;"
+            arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
+            id="scene"
+            embedded
+            gesture-detector
+        >
+            <a-assets>
+                <a-asset-item
+                    id="fs-asset"
+                    src="assets/asset.glb"
+                ></a-asset-item>
+                <img id="fs-image" src="assets/image.png">
+            </a-assets>
+
+            <a-marker
+                id="fs-marker"
+                type="pattern"
+                preset="custom"
+                url="assets/marker.patt"
+            >
+                <a-image 
+                    src="#fs-image" 
+                    scale="4 4 4"
+                    rotation="-90 0 0"
+                ></a-image>
+
+                <a-entity
+                    id="fs-model"
+                    scale="6 6 6"
+                    gltf-model="#fs-asset"
+                    position="0 0 1"
+                    rotation="-90 0 0"
+                ></a-entity>
+            </a-marker>
+
+            <a-entity camera></a-entity>
+        </a-scene>
+    </body>
 </html>
